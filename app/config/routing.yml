@@ -1,0 +1,8 @@
+produit_produit:
+    resource: "@ProduitBundle/Resources/config/routing.yml"
+    prefix: /
+
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/"
+    type: annotation
+    prefix: /admin

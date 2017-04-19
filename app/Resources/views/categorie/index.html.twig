@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>categories list</h1>
+    <a href="{{ path( 'categorie_new' )}}">create a new package</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Slurg</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie in categories %}
+            <tr>
+                <td>{{ categorie.nom }}</td>
+                <td>{{ categorie.slurg }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

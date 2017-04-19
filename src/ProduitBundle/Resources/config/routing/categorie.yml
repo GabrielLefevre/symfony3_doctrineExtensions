@@ -1,0 +1,9 @@
+categorie_index:
+    path:     /
+    defaults: { _controller: "ProduitBundle:Categorie:index" }
+    methods: GET
+
+categorie_new:
+    path:     /new/
+    defaults: { _controller: "ProduitBundle:Categorie:new" }
+    methods: [GET, POST]
