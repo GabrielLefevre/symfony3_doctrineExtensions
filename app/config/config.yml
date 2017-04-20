@@ -93,3 +93,4 @@ stof_doctrine_extensions:
         default:
             sluggable: true
             translatable: true
+            tree: true

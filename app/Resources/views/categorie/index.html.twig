@@ -2,24 +2,26 @@
 
 {% block body %}
     <h1>categories list</h1>
-    <a href="{{ path( 'categorie_new' )}}">create a new package</a>
+    <a href="{{ path( 'categorie_new' )}}">create a new categorie</a>
 
     <table>
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Slurg</th>
+                <th>Slug</th>
             </tr>
         </thead>
         <tbody>
         {% for categorie in categories %}
             <tr>
                 <td>{{ categorie.nom }}</td>
-                <td>{{ categorie.slurg }}</td>
+                <td>{{ categorie.slug }}</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+
+    {{ arrayTree | raw}}
 
     
 {% endblock %}

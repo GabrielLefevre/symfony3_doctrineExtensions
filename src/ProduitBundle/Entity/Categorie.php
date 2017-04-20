@@ -31,11 +31,10 @@ class Categorie
     private $nom;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="slurg", type="string", length=255)
+     * @Gedmo\Slug(fields={"nom"})
+     * @ORM\Column(length=128)
      */
-    private $slurg;
+    private $slug;
 
     /**
      * @Gedmo\TreeLeft
@@ -110,28 +109,16 @@ class Categorie
         return $this->nom;
     }
 
-    /**
-     * Set slurg
-     *
-     * @param string $slurg
-     *
-     * @return Categorie
-     */
-    public function setSlurg($slurg)
+    public function setSlug($slug)
     {
-        $this->slurg = $slurg;
+        $this->slug = $slug;
 
         return $this;
     }
 
-    /**
-     * Get slurg
-     *
-     * @return string
-     */
-    public function getSlurg()
+    public function getSlug()
     {
-        return $this->slurg;
+        return $this->slug;
     }
 
     public function getRoot()
@@ -149,9 +136,23 @@ class Categorie
         return $this->parent;
     }
 
-    function __toString()
+    public function getChildren() {
+        return $this->children;
+    }
+
+    public function getAllChildrens()
     {
-        return($this->nom);
+        $childs = array();
+        $childs[] = $this;
+        $objects = $this->getChildren();
+        while (count($objects) > 0) {
+            $childs = array_merge($childs, $objects->toArray());
+            foreach($objects as $object){
+                $objects = $object->getChildren();
+                $childs = array_merge($childs, $objects->toArray());
+            }
+        }
+        return $childs;
     }
 
 

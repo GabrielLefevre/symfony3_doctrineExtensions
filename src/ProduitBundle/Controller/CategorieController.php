@@ -14,10 +14,24 @@ class CategorieController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $categories = $em->getRepository('ProduitBundle:Categorie')->findAll();
+        $repo = $em->getRepository('ProduitBundle:Categorie');
+        $categories = $repo->findAll();
+
+        $options = array(
+            'decorate' => true,
+            'rootOpen' => '<ul>',
+            'rootClose' => '</ul>',
+            'childOpen' => '<li>',
+            'childClose' => '</li>',
+            'nodeDecorator' => function($node) {
+                return '<a href="/cat/'.$node['slug'].'">'.$node['slug'].'</a>';
+            }
+        );
+        $arrayTree = $repo->childrenHierarchy(null,false,$options);
 
         return $this->render('categorie/index.html.twig', array(
             'categories' => $categories,
+            'arrayTree' => $arrayTree,
         ));
     }
 
@@ -33,9 +47,11 @@ class CategorieController extends Controller
 
     public function newAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
         $categorie = new Categorie();
         $form = $this->createForm('ProduitBundle\Form\CategorieType', $categorie, array(
-            'data_class' => 'ProduitBundle\Entity\Categorie'));
+            'data_class' => 'ProduitBundle\Entity\Categorie',
+            'em' => $em));
         if($request->getMethod()=== "POST") {
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
