@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 class CategorieController extends Controller
 {
 
-
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
@@ -24,7 +23,7 @@ class CategorieController extends Controller
             'childOpen' => '<li>',
             'childClose' => '</li>',
             'nodeDecorator' => function($node) {
-                return '<a href="/cat/'.$node['slug'].'">'.$node['slug'].'</a>';
+                return '<a href="'.$node['slug'].'">'.$node['slug'].'</a>';
             }
         );
         $arrayTree = $repo->childrenHierarchy(null,false,$options);
@@ -38,10 +37,10 @@ class CategorieController extends Controller
 
     public function showAction(Categorie $categorie)
     {
-        $deleteForm = $this->createDeleteForm($categorie);
+        //$deleteForm = $this->createDeleteForm($categorie);
         return $this->render('categorie/show.html.twig', array(
             'categorie' => $categorie,
-            'delete_form' => $deleteForm->createView(),
+            //'delete_form' => $deleteForm->createView(),
         ));
     }
 
